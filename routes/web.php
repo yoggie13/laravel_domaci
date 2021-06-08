@@ -19,7 +19,7 @@ use App\Http\Controllers\BookingController;
 Route::get('/', [BookingController::class, 'getLocations']);
 Route::get('/bookings', [BookingController::class, 'getBookings']);
 
-Route::post('/bookings', [BookingController:class, 'addBooking']);
+Route::post('/bookings', [BookingController::class, 'addBooking']);
 
 Route::get('/dashboard', [BookingController::class, 'getData']);
 

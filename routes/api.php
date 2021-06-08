@@ -16,4 +16,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+    
 });
+
+Route::get('/', [BookingController::class, 'getLocations']);
+Route::get('/bookings', [BookingController::class, 'getBookings']);
+
+Route::post('/bookings', [BookingController::class, 'addBooking']);
+
+Route::get('/dashboard', [BookingController::class, 'getData']);
+
