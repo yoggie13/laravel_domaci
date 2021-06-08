@@ -27,6 +27,10 @@ class BookingController extends BaseController
 
         $users = \DB::table('users')->find($user_id);
 
+        if(!$request->has('user_id'))
+            //return $this->sendError("Nije prosleđen user", 300);
+            return redirect()->route('/');
+
         if($users == NULL) 
             return $this->sendError("Ne postoji taj korisnik");
 
@@ -47,6 +51,8 @@ class BookingController extends BaseController
     
     }
     public function addBooking(Request $request){
+
+
         \DB::table('bookings')->insert([
             'user_id' -> $request->input('user_id'),
             'location_id' -> $request->input('location_id'),

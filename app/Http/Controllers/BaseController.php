@@ -12,7 +12,7 @@ class BaseController extends Controller
             'message'=> $message,
             'data'=> $result
         ];
-        return response()->json($response, 200, ['Content-Type'=>'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
+        return response()->json($response, 200, ['Content-Type'=>'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     }
 
     public function sendError($error, $code = 404){
@@ -21,6 +21,6 @@ class BaseController extends Controller
             'message'=> $error
         ];
       
-        return response()->json($response, $code, ['Content-Type'=>'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
+        return response()->json($response, $code, ['Content-Type'=>'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     }
 }

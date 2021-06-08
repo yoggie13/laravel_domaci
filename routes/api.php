@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::get('/', [BookingController::class, 'getLocations']);
+Route::get('/', [BookingController::class, 'getLocations']) -> name('/');
 Route::get('/bookings', [BookingController::class, 'getBookings']);
 
 Route::post('/bookings', [BookingController::class, 'addBooking']);
