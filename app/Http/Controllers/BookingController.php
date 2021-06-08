@@ -24,7 +24,6 @@ class BookingController extends BaseController
     public function getBookings(Request $request){
         $sum_price = 0;
         $user_id = $request->input('user_id');
-        //$user_id = 1;
 
         $users = \DB::table('users')->find($user_id);
 
