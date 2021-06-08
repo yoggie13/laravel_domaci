@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use App\Http\Controllers\BookingController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [BookingController::class, 'getLocations']);
+Route::get('/bookings', [BookingController::class, 'getBookings']);
+
+Route::post('/bookings', [BookingController:class, 'addBooking']);
+
+Route::get('/dashboard', [BookingController::class, 'getData']);
+
+
