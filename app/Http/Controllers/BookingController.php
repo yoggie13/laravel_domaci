@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
+use App\Models\Booking;
 
 class BookingController extends BaseController
 {
@@ -17,10 +18,6 @@ class BookingController extends BaseController
 
     }
 
-    // public function addLocation($name, $picture_url, $description, $price){
-
-    //     \DB::table('locations')->insert
-    // }
     public function getBookings(Request $request){
         $sum_price = 0;
         $user_id = $request->input('user_id');
@@ -28,7 +25,6 @@ class BookingController extends BaseController
         $users = \DB::table('users')->find($user_id);
 
         if(!$request->has('user_id'))
-            //return $this->sendError("Nije prosleđen user", 300);
             return redirect()->route('/');
 
         if($users == NULL) 
@@ -52,25 +48,36 @@ class BookingController extends BaseController
     }
     public function addBooking(Request $request){
 
-
-        \DB::table('bookings')->insert([
-            'user_id' -> $request->input('user_id'),
-            'location_id' -> $request->input('location_id'),
-            'start_date' -> $request->input('start_date'),
-            'end_date' -> $request->input('end_date')
+        $validated = $request->validate([
+            'user_id' => ['required'],
+            'location_id' => ['required'],
+            'start_date' => ['required'],
+            'end_date' => ['required']
         ]);
 
-        $output = \DB::table('bookings')
-                    ->where('user_id', '=', $request->input('user_id'))
-                    ->where('location_id','=', $request->input('location_id'))
-                    ->where('start_date','=', $request->input('start_date'))
-                    ->where('end_date','=', $request->input('end_date'))
-                    ->get();
+        $user_booking = \DB::table('bookings')
+                            ->where('user_id', $request->input('user_id'))
+                            ->where('location_id', $request->input('location_id'))
+                            ->where('start_date', date("Y-m-d", strtotime($request->input('start_date'))))
+                            ->where('end_date', date("Y-m-d", strtotime($request->input('end_date'))))
+                            ->exists();
 
-        if(!isEmpty($output))
-            return $this->sendConfirmation($output, "Sledeći aranžman uspešno sačuvan");
+        if($user_booking)
+            return $this->sendError("Već je bukiran taj aranžman", 300);
+        
+        $booking = new Booking();
 
-        return $this->sendError("Nije moguće sačuvati", 300);
+        $booking->user_id = $request->input('user_id');
+        $booking->location_id = $request->input('location_id');
+        $booking->start_date =  $request->input('start_date');
+        $booking->end_date =  $request->input('end_date');
+        
+        $saved = $booking->save();
+      
+        if($saved)
+            return $this->sendConfirmation(true, "Uspešno sačuvano");
+
+        return $this->sendError("Greška pri čuvanju", 500);
     }
 
 }
