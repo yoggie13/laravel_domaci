@@ -3,13 +3,56 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\BaseController;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends BaseController
 {
-    public function login(){
+    public function login(Request $request){
+
+        $validated = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+
+        $user_exists = \DB::table('users')
+            ->where('email', $request->input('email'))
+            ->exists();
+        
+        if(!$user_exists)
+            return $this->sendError("Ne postoji korisnik sa tim emailom", 404);
+        
+        $user = \DB::table('users')
+                    ->where('email', $request->input('email'))
+                    ->first();
+        
+        if (Hash::check($request->input('password'), $user->password))
+        {
+            return $this->sendConfirmation(collect($user)->only(['id','name','email']), "Uspešno logovanje");
+        }
+        
+        return $this->sendError("Pogrešna lozinka");
 
     }
-    public function register(){
-        
+    public function register(Request $request){
+
+        $validated = $request->validate([
+            'email' => 'required|email|unique:users',
+            'password' => 'required',
+            'name' => 'required'
+        ]);
+
+        $user = new User();
+
+        $user->email = $request->input('email');
+        $user->name = $request->input('name');
+        $user->password = bcrypt($request->input('password'));
+
+        if($user->save())
+            return $this->sendConfirmation($user, "Uspelo");
+
+        return $this->sendError("Registracija nije uspela", 501);
     }
 }

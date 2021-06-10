@@ -49,10 +49,10 @@ class BookingController extends BaseController
     public function addBooking(Request $request){
 
         $validated = $request->validate([
-            'user_id' => ['required'],
-            'location_id' => ['required'],
-            'start_date' => ['required'],
-            'end_date' => ['required']
+            'user_id' => 'required',
+            'location_id' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
         ]);
 
         $user_booking = \DB::table('bookings')
@@ -83,10 +83,10 @@ class BookingController extends BaseController
     public function deleteBooking(Request $request){
 
         $validated = $request->validate([
-            'user_id' => ['required'],
-            'location_id' => ['required'],
-            'start_date' => ['required'],
-            'end_date' => ['required']
+            'user_id' => 'required',
+            'location_id' => 'required',
+            'start_date' => 'required',
+            'end_date' =>'required',
         ]);
 
         $user_booking = \DB::table('bookings')
