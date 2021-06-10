@@ -28,7 +28,7 @@ class BookingController extends BaseController
             return redirect()->route('/');
 
         if($users == NULL) 
-            return $this->sendError("Ne postoji taj korisnik");
+            return $this->sendError("Ne postoji taj korisnik", 404);
 
 
         $users_bookings = \DB::table('bookings')
@@ -37,7 +37,7 @@ class BookingController extends BaseController
                             ->get();
 
         foreach($users_bookings as $booking){
-            $sum_price += $booking->$price;
+            $sum_price += $booking->price;
         }
 
         if(!$users_bookings->isEmpty())
@@ -63,7 +63,7 @@ class BookingController extends BaseController
                             ->exists();
 
         if($user_booking)
-            return $this->sendError("Već je bukiran taj aranžman", 300);
+            return $this->sendError("Već je bukiran taj aranžman", 400);
         
         $booking = new Booking();
 
@@ -77,7 +77,38 @@ class BookingController extends BaseController
         if($saved)
             return $this->sendConfirmation(true, "Uspešno sačuvano");
 
-        return $this->sendError("Greška pri čuvanju", 500);
+        return $this->sendError("Greška pri čuvanju", 501);
     }
 
+    public function deleteBooking(Request $request){
+
+        $validated = $request->validate([
+            'user_id' => ['required'],
+            'location_id' => ['required'],
+            'start_date' => ['required'],
+            'end_date' => ['required']
+        ]);
+
+        $user_booking = \DB::table('bookings')
+                            ->where('user_id', $request->input('user_id'))
+                            ->where('location_id', $request->input('location_id'))
+                            ->where('start_date', date("Y-m-d", strtotime($request->input('start_date'))))
+                            ->where('end_date', date("Y-m-d", strtotime($request->input('end_date'))))
+                            ->exists();
+
+        if(!$user_booking)
+            return $this->sendError("Ne postoji taj aranžman", 404);
+
+        $deleted = \DB::table('bookings')
+                ->where('user_id', '=', $request->input('user_id'))
+                ->where('location_id', '=', $request->input('location_id'))
+                ->where('start_date', '=', date("Y-m-d", strtotime($request->input('start_date'))))
+                ->where('end_date', '=', date("Y-m-d", strtotime($request->input('end_date'))))
+                ->delete();
+      
+        if($deleted)
+            return $this->sendConfirmation(true, "Uspešno obrisano");
+
+        return $this->sendError("Greška pri brisanju", 501);
+    }
 }

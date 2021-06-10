@@ -20,9 +20,10 @@ use App\Http\Controllers\BookingController;
 // });
 
 Route::get('/', [BookingController::class, 'getLocations']) -> name('/');
+
 Route::get('/bookings', [BookingController::class, 'getBookings']);
-
 Route::post('/bookings', [BookingController::class, 'addBooking']);
+Route::delete('/bookings', [BookingController::class, 'deleteBooking']);
 
-Route::get('/dashboard', [BookingController::class, 'getData']);
-
+Route::get('/login', [UserController::class, 'login']);
+Route::post('/register', [UserController::class, 'register']);
