@@ -77,6 +77,7 @@ class UserController extends BaseController
         $user->email = $request->input('email');
         $user->name = $request->input('name');
         $user->password = bcrypt($request->input('password'));
+        $user->logged_in = true;
 
         if($user->save())
             return $this->sendConfirmation($user, "Uspelo");
