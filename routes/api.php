@@ -26,5 +26,6 @@ Route::get('/bookings', [BookingController::class, 'getBookings']);
 Route::post('/bookings', [BookingController::class, 'addBooking']);
 Route::delete('/bookings', [BookingController::class, 'deleteBooking']);
 
-Route::get('/login', [UserController::class, 'login']);
+Route::post('/login', [UserController::class, 'login']);
+Route::post('/logout', [UserController::class, 'logout']);
 Route::post('/register', [UserController::class, 'register']);
