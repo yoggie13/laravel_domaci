@@ -52,14 +52,12 @@ class BookingController extends BaseController
             'user_id' => 'required',
             'location_id' => 'required',
             'start_date' => 'required',
-            'end_date' => 'required',
         ]);
 
         $user_booking = \DB::table('bookings')
                             ->where('user_id', $request->input('user_id'))
                             ->where('location_id', $request->input('location_id'))
                             ->where('start_date', date("Y-m-d", strtotime($request->input('start_date'))))
-                            ->where('end_date', date("Y-m-d", strtotime($request->input('end_date'))))
                             ->exists();
 
         if($user_booking)
@@ -70,7 +68,6 @@ class BookingController extends BaseController
         $booking->user_id = $request->input('user_id');
         $booking->location_id = $request->input('location_id');
         $booking->start_date =  $request->input('start_date');
-        $booking->end_date =  $request->input('end_date');
         
         $saved = $booking->save();
       
@@ -86,14 +83,12 @@ class BookingController extends BaseController
             'user_id' => 'required',
             'location_id' => 'required',
             'start_date' => 'required',
-            'end_date' =>'required',
         ]);
 
         $user_booking = \DB::table('bookings')
                             ->where('user_id', $request->input('user_id'))
                             ->where('location_id', $request->input('location_id'))
                             ->where('start_date', date("Y-m-d", strtotime($request->input('start_date'))))
-                            ->where('end_date', date("Y-m-d", strtotime($request->input('end_date'))))
                             ->exists();
 
         if(!$user_booking)
@@ -103,7 +98,6 @@ class BookingController extends BaseController
                 ->where('user_id', '=', $request->input('user_id'))
                 ->where('location_id', '=', $request->input('location_id'))
                 ->where('start_date', '=', date("Y-m-d", strtotime($request->input('start_date'))))
-                ->where('end_date', '=', date("Y-m-d", strtotime($request->input('end_date'))))
                 ->delete();
       
         if($deleted)
