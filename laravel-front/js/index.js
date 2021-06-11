@@ -5,7 +5,7 @@ window.onload = function () {
     user = localStorage.getItem("user");
 
     if (user == null)
-        window.open('/laravel-front/login.html', target = '_self');
+        window.open('login.html', target = '_self');
 };
 
 $(document).ready(function () {

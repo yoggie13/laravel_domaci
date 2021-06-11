@@ -3,11 +3,11 @@ var bookings = document.getElementById('bookings');
 var logout = document.getElementById('logout');
 
 homepage.addEventListener('click', function () {
-    window.open('/laravel-front', target = "_self");
+    window.open('index.html', target = "_self");
 });
 
 bookings.addEventListener('click', function () {
-    window.open('/laravel-front/bookings.html', target = "_self");
+    window.open('bookings/html', target = "_self");
 });
 
 logout.addEventListener('click', function () {
@@ -20,7 +20,7 @@ logout.addEventListener('click', function () {
         data: localStorage.getItem("user"),
         success: function (result) {
             localStorage.clear();
-            window.open('/laravel-front/login.html?', target = "_self");
+            window.open('login.html', target = "_self");
         },
         error: function (error) {
 

@@ -5,7 +5,7 @@ window.onload = function () {
     user = localStorage.getItem("user");
 
     if (user != null)
-        window.open('/laravel-front', target = '_self');
+        window.open('index.html', target = '_self');
 
 };
 
@@ -35,7 +35,7 @@ form[0].addEventListener('submit', function (e) {
 
             localStorage.setItem("user", JSON.stringify(result.data));
 
-            window.open('/laravel-front', target = "_self");
+            window.open('index.html', target = "_self");
         },
         error: function (error) {
             alert(error.responseJSON.message);
