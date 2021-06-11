@@ -17,7 +17,7 @@ h1{
 }
 #wrap{
     width: 30vw;
-    height: 50vh;
+    height: 65vh;
     background-color: rgb(41, 40, 39);
     display: flex;
     justify-content: center;
@@ -46,4 +46,10 @@ h1{
 }
 #form label{
 margin-bottom: 5px;
+}
+@media screen and (max-width: 1000px) {
+    #wrap{
+        width: 90vw;
+        margin-left: 5vw;
+    }
 }
