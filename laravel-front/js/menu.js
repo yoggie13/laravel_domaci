@@ -7,7 +7,7 @@ homepage.addEventListener('click', function () {
 });
 
 bookings.addEventListener('click', function () {
-    window.open('bookings/html', target = "_self");
+    window.open('bookings.html', target = "_self");
 });
 
 logout.addEventListener('click', function () {

@@ -20,12 +20,12 @@ class BookingController extends BaseController
 
     public function getBookings(Request $request){
         $sum_price = 0;
-        $user_id = $request->input('user_id');
+        $user_id = $request->input('id');
+        
+        if(!$request->has('id'))
+            return redirect()->route('/');
 
         $users = \DB::table('users')->find($user_id);
-
-        if(!$request->has('user_id'))
-            return redirect()->route('/');
 
         if($users == NULL) 
             return $this->sendError("Ne postoji taj korisnik", 404);
