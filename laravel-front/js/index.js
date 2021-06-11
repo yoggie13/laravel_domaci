@@ -84,7 +84,7 @@ function saveBooking() {
         contentType: 'application/json',
         data: JSON.stringify(booking),
         success: function (result) {
-            console.log(result);
+            alert(result.message);
         },
         error: function (error) {
             alert(error.responseJSON.message);

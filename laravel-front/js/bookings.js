@@ -14,7 +14,6 @@ window.onload = function () {
 function sendPostRequest() {
 
     var userSend = JSON.parse(user);
-    console.log(userSend);
 
     $.ajax({
         url: "http://127.0.0.1:8000/api/bookings",
@@ -23,7 +22,7 @@ function sendPostRequest() {
         contentType: 'application/json',
         data: userSend,
         success: function (result) {
-            addLocations(result.data)
+            addLocations(result);
         },
         error: function (error) {
             createMessage();
@@ -50,6 +49,15 @@ function createMessage() {
     locations.append(div);
 }
 function addLocations(locations) {
+    price = locations.message;
+    locations = locations.data;
+
+    var welcome = document.getElementById('welcome');
+    var p = document.createElement('p');
+    p.innerHTML = price;
+    welcome.append(p);
+
+
     var id = 0;
     locations.forEach(element => {
         createDiv(element, id);
