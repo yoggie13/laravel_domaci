@@ -72,6 +72,8 @@ function createDiv(element, id) {
 
     const button = document.createElement('button');
     button.innerHTML = "Otkaži";
+    button.id = element.id;
+    button.onclick = deleteBooking;
 
     div.append(h2);
     div.append(desc);
@@ -93,4 +95,27 @@ function createDiv(element, id) {
     div.style.backgroundImage = `url('${element.picture_url}')`;
     div.style.backgroundSize = 'cover';
     div.style.backgroundRepeat = 'no-repeat';
+}
+
+function deleteBooking() {
+
+    var booking = {
+        "user_id": JSON.parse(user).id,
+        "location_id": this.id,
+        "start_date": "2021-02-02"
+    };
+
+    $.ajax({
+        url: "http://127.0.0.1:8000/api/bookings",
+        type: "DELETE",
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(booking),
+        success: function (result) {
+            window.open('bookings.html', target = "_self");
+        },
+        error: function (error) {
+            alert(error.responseJSON.message);
+        }
+    })
 }
